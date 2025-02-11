@@ -91,7 +91,6 @@ function App() {
   useEffect(() => {
     const handleBeforeInstallPrompt = (event: Event) => {
       event.preventDefault();
-
       installPrompt.current = event;
     };
 
