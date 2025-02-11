@@ -1,10 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import tinycolor from "tinycolor2";
 import "./App.css";
-import { Button, Input, Stack, Image, Box } from "@chakra-ui/react";
-import { prominent } from "color.js";
+import { Button, Input, Stack, Image, Tabs } from "@chakra-ui/react";
+import { average, prominent } from "color.js";
+import Case from "case";
+
+interface Palette {
+  prominent: string[];
+  average: string[];
+}
 
 function App() {
-  const [palette, setPalette] = useState<string[]>([]);
+  const [palette, setPalette] = useState<Partial<Palette>>({});
   const [imgObj, setImgObj] = useState<{
     imagePreview: string;
     imageFile: unknown;
@@ -16,6 +23,11 @@ function App() {
     handleFileInput.current?.click();
   };
 
+  const handleClear = () => {
+    setImgObj(null);
+    setPalette({});
+  };
+
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setImgObj({
       imagePreview: URL.createObjectURL(event.target.files![0]),
@@ -25,12 +37,25 @@ function App() {
 
   const handleGetPalette = useCallback(async () => {
     try {
-      const colors = await prominent(imgObj?.imagePreview as string, {
+      const options = {
         amount: 5,
+        group: 20,
         format: "hex",
-      });
+      };
 
-      setPalette(colors as string[]);
+      const prominentColors = (await prominent(
+        imgObj?.imagePreview as string,
+        options
+      )) as string[];
+      const avgColors = (await average(
+        imgObj?.imagePreview as string,
+        options
+      )) as string;
+
+      setPalette({
+        ...(prominentColors ? { prominent: prominentColors } : {}),
+        ...(avgColors ? { average: [avgColors] } : {}),
+      });
     } catch (error) {
       console.log("error:", error);
     }
@@ -44,47 +69,78 @@ function App() {
 
   return (
     <Stack padding={4} gap={4} w="full">
-      <div>
-        <Button as={Stack} onClick={handleClick} w="full">
-          Add photo
-        </Button>
-        <Input
-          display="none"
-          ref={handleFileInput}
-          type="file"
-          accept="image/*"
-          capture="environment"
-          onChange={handleImageChange}
-        />
-      </div>
+      <Input
+        display="none"
+        ref={handleFileInput}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        onChange={handleImageChange}
+      />
 
-      <Stack
+      <Button
+        as={Stack}
+        onClick={!imgObj?.imagePreview ? handleClick : undefined}
+        cursor={!imgObj?.imagePreview ? "pointer" : "default"}
         alignItems="center"
         justifyContent="center"
-        padding={4}
-        border="1px dashed orange"
+        padding={2}
+        borderStyle="dashed"
+        borderColor="orange"
         borderRadius={8}
         h="30vh"
+        variant={!imgObj?.imagePreview ? "surface" : "outline"}
       >
         <Stack objectFit="contain" h="full">
           {imgObj ? (
             <Image src={imgObj?.imagePreview} alt="img" h="100%" w="full" />
           ) : (
             <Stack alignItems="center" justifyContent="center" h="full">
-              <p>photo goes here</p>
+              Add Photo
             </Stack>
           )}
         </Stack>
-      </Stack>
+      </Button>
+      {imgObj?.imagePreview && (
+        <Button w="full" onClick={handleClear}>
+          Clear
+        </Button>
+      )}
 
-      {palette.length > 0 && (
-        <Stack p={2} gap={2} backgroundColor="gray.100" borderRadius={8}>
-          {palette.map((color, index) => (
-            <Box backgroundColor={color} key={index} p={4} borderRadius={8}>
-              {color}
-            </Box>
+      {!!Object.keys(palette).length && (
+        <Tabs.Root
+          variant="enclosed"
+          fitted
+          defaultValue={Object.keys(palette)[0]}
+        >
+          <Tabs.List>
+            {Object.keys(palette).map(key => (
+              <Tabs.Trigger key={`trigger-${key}`} value={key}>
+                {Case.title(key)}
+              </Tabs.Trigger>
+            ))}
+          </Tabs.List>
+          {Object.entries(palette).map(([key, palette]) => (
+            <Tabs.Content key={`content-${key}`} value={key}>
+              <Stack p={2} gap={2} backgroundColor="gray.100" borderRadius={8}>
+                {palette.map((color, index) => (
+                  <Stack
+                    backgroundColor={color}
+                    key={index}
+                    p={4}
+                    borderRadius={8}
+                    color={tinycolor
+                      .mostReadable(color, ["#fff", "#000"])
+                      .toHexString()}
+                    alignItems="center"
+                  >
+                    {color}
+                  </Stack>
+                ))}
+              </Stack>
+            </Tabs.Content>
           ))}
-        </Stack>
+        </Tabs.Root>
       )}
     </Stack>
   );
