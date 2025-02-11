@@ -12,7 +12,7 @@ interface Palette {
 }
 
 function App() {
-//   const [hasApp, setHasApp] = useState(false);
+  //   const [hasApp, setHasApp] = useState(false);
   const [showInstall, setShowInstall] = useState(true);
   const [palette, setPalette] = useState<Partial<Palette>>({});
   const [imgObj, setImgObj] = useState<{
@@ -80,7 +80,7 @@ function App() {
         setShowInstall(false);
       }
     } catch (error) {
-        console.log('error:', error)
+      console.log("error:", error);
     }
   }, []);
 
@@ -91,8 +91,20 @@ function App() {
   }, [handleGetPalette, imgObj?.imageFile]);
 
   useEffect(() => {
-    const handleBeforeInstallPrompt = (event: Event) => {
+    const handleBeforeInstallPrompt = async (event: Event) => {
       event.preventDefault();
+
+      const relatedApps = await (
+        navigator as Navigator & {
+          getInstalledRelatedApps: () => Promise<unknown[]>;
+        }
+      ).getInstalledRelatedApps();
+
+      if (relatedApps.length) {
+        setShowInstall(false);
+        return;
+      }
+
       installPrompt.current = event;
     };
 
