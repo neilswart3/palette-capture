@@ -26,6 +26,7 @@ function App() {
   const handleClear = () => {
     setImgObj(null);
     setPalette({});
+    handleFileInput.current!.value = undefined as unknown as string; 
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,11 +97,12 @@ function App() {
             <Image src={imgObj?.imagePreview} alt="img" h="100%" w="full" />
           ) : (
             <Stack alignItems="center" justifyContent="center" h="full">
-              Add Photo
+              Click to Add Photo
             </Stack>
           )}
         </Stack>
       </Button>
+
       {imgObj?.imagePreview && (
         <Button w="full" onClick={handleClear}>
           Clear
