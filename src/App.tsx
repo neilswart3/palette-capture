@@ -12,7 +12,7 @@ interface Palette {
 }
 
 function App() {
-  const [hasApp, setHasApp] = useState(false);
+//   const [hasApp, setHasApp] = useState(false);
   const [showInstall, setShowInstall] = useState(true);
   const [palette, setPalette] = useState<Partial<Palette>>({});
   const [imgObj, setImgObj] = useState<{
@@ -76,7 +76,7 @@ function App() {
 
       if (result) {
         installPrompt.current = null;
-        setHasApp(true);
+        // setHasApp(true);
         setShowInstall(false);
       }
     } catch (error) {
