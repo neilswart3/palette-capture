@@ -91,9 +91,8 @@ function App() {
   }, [handleGetPalette, imgObj?.imageFile]);
 
   useEffect(() => {
-    const handleBeforeInstallPrompt =  (event: Event) => {
+    const handleBeforeInstallPrompt = (event: Event) => {
       event.preventDefault();
-
 
       installPrompt.current = event;
     };
@@ -108,32 +107,38 @@ function App() {
     };
   }, []);
 
+  //   useEffect(() => {
+  //     const handleCheckApps = async () => {
+  //         try {
+
+  //       const relatedApps = await (
+  //         navigator as Navigator & {
+  //           getInstalledRelatedApps: () => Promise<unknown[]>;
+  //         }
+  //       ).getInstalledRelatedApps();
+
+  //       console.log('relatedApps:', relatedApps)
+
+  //       setHasApp(relatedApps);
+
+  //     //   if (relatedApps.length) {
+  //     //     setShowInstall(false);
+  //     //     setHasApp(relatedApps);
+  //     //     return;
+  //     //   }
+  //         } catch (error) {
+  //             console.log('error:', error)
+  //         }
+  //     }
+
+  //     handleCheckApps();
+  //   }, [])
+
   useEffect(() => {
-    const handleCheckApps = async () => {
-        try {
-            
-      const relatedApps = await (
-        navigator as Navigator & {
-          getInstalledRelatedApps: () => Promise<unknown[]>;
-        }
-      ).getInstalledRelatedApps();
-
-      console.log('relatedApps:', relatedApps)
-
-      setHasApp(relatedApps);
-
-    //   if (relatedApps.length) {
-    //     setShowInstall(false);
-    //     setHasApp(relatedApps);
-    //     return;
-    //   }
-        } catch (error) {
-            console.log('error:', error)
-        }
+    if (window.matchMedia("(display-mode: standalone)").matches) {
+      setHasApp(true);
     }
-
-    handleCheckApps();
-  }, [])
+  }, []);
 
   return (
     <Stack padding={4} gap={4} w="full">
