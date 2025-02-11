@@ -88,7 +88,7 @@ function App() {
         padding={2}
         borderStyle="dashed"
         borderColor="orange"
-        borderRadius={8}
+        borderRadius={6}
         h="30vh"
         variant={!imgObj?.imagePreview ? "surface" : "outline"}
       >
@@ -104,7 +104,7 @@ function App() {
       </Button>
 
       {imgObj?.imagePreview && (
-        <Button w="full" onClick={handleClear}>
+        <Button w="full" onClick={handleClear} borderRadius={6}>
           Clear
         </Button>
       )}
@@ -117,20 +117,20 @@ function App() {
         >
           <Tabs.List>
             {Object.keys(palette).map(key => (
-              <Tabs.Trigger key={`trigger-${key}`} value={key}>
+              <Tabs.Trigger borderRadius={6} key={`trigger-${key}`} value={key}>
                 {Case.title(key)}
               </Tabs.Trigger>
             ))}
           </Tabs.List>
           {Object.entries(palette).map(([key, palette]) => (
             <Tabs.Content key={`content-${key}`} value={key}>
-              <Stack p={2} gap={2} backgroundColor="gray.100" borderRadius={8}>
+              <Stack p={2} gap={2} backgroundColor="gray.100" borderRadius={6}>
                 {palette.map((color, index) => (
                   <Stack
                     backgroundColor={color}
                     key={index}
                     p={4}
-                    borderRadius={8}
+                    borderRadius={6}
                     color={tinycolor
                       .mostReadable(color, ["#fff", "#000"])
                       .toHexString()}
