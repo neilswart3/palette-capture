@@ -12,7 +12,6 @@ interface Palette {
 }
 
 function App() {
-  const [hasApp, setHasApp] = useState<unknown>(false);
   const [showInstall, setShowInstall] = useState(true);
   const [palette, setPalette] = useState<Partial<Palette>>({});
   const [imgObj, setImgObj] = useState<{
@@ -76,7 +75,6 @@ function App() {
 
       if (result) {
         installPrompt.current = null;
-        // setHasApp(true);
         setShowInstall(false);
       }
     } catch (error) {
@@ -107,38 +105,11 @@ function App() {
     };
   }, []);
 
-  //   useEffect(() => {
-  //     const handleCheckApps = async () => {
-  //         try {
-
-  //       const relatedApps = await (
-  //         navigator as Navigator & {
-  //           getInstalledRelatedApps: () => Promise<unknown[]>;
-  //         }
-  //       ).getInstalledRelatedApps();
-
-  //       console.log('relatedApps:', relatedApps)
-
-  //       setHasApp(relatedApps);
-
-  //     //   if (relatedApps.length) {
-  //     //     setShowInstall(false);
-  //     //     setHasApp(relatedApps);
-  //     //     return;
-  //     //   }
-  //         } catch (error) {
-  //             console.log('error:', error)
-  //         }
-  //     }
-
-  //     handleCheckApps();
-  //   }, [])
-
   useEffect(() => {
     if (window.matchMedia("(display-mode: standalone)").matches) {
-      setHasApp(true);
+      setShowInstall(false);
     }
-  }, []);
+  }, [showInstall]);
 
   return (
     <Stack padding={4} gap={4} w="full">
@@ -171,15 +142,6 @@ function App() {
           </Stack>
         </Stack>
       )}
-      <pre>
-        {JSON.stringify(
-          {
-            hasApp,
-          },
-          null,
-          2
-        )}
-      </pre>
 
       <Input
         display="none"
