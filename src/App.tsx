@@ -3,7 +3,10 @@ import "./App.css";
 import { Button, Stack } from "@chakra-ui/react";
 
 function App() {
-  const [imgObj, setImgObj] = useState<{imagePreview: string; imageFile: unknown} | null>(null);
+  const [imgObj, setImgObj] = useState<{
+    imagePreview: string;
+    imageFile: unknown;
+  } | null>(null);
 
   const handleFileInput = useRef<HTMLInputElement>(null);
 
@@ -11,9 +14,9 @@ function App() {
     handleFileInput.current?.click();
   };
 
-//   const handleOpenCamera = () => {
-//     navigator.mediaDevices.getUserMedia({ video: true });
-//   };
+  //   const handleOpenCamera = () => {
+  //     navigator.mediaDevices.getUserMedia({ video: true });
+  //   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setImgObj({
@@ -30,6 +33,7 @@ function App() {
         </Button>
         <label>
           <input
+            ref={handleFileInput}
             type="file"
             accept="image/*"
             capture="environment"
