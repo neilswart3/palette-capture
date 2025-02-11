@@ -12,7 +12,7 @@ interface Palette {
 }
 
 function App() {
-  //   const [hasApp, setHasApp] = useState(false);
+  const [hasApp, setHasApp] = useState<unknown>(false);
   const [showInstall, setShowInstall] = useState(true);
   const [palette, setPalette] = useState<Partial<Palette>>({});
   const [imgObj, setImgObj] = useState<{
@@ -102,6 +102,7 @@ function App() {
 
       if (relatedApps.length) {
         setShowInstall(false);
+        setHasApp(relatedApps);
         return;
       }
 
@@ -149,6 +150,15 @@ function App() {
           </Stack>
         </Stack>
       )}
+      <pre>
+        {JSON.stringify(
+          {
+            hasApp,
+          },
+          null,
+          2
+        )}
+      </pre>
 
       <Input
         display="none"
