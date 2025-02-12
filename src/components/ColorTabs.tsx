@@ -23,9 +23,16 @@ const ColorTabs: React.FC<Props> = ({ colors }) => {
           fitted
           defaultValue={Object.keys(colors)[0]}
         >
-          {tabList.map((tabs, index) =>
+          {tabList.map((tabs, index, { length }) =>
             !tabs.length ? null : (
-              <Tabs.List key={`tab-${index}`} flexWrap="wrap">
+              <Tabs.List
+                key={`tab-${index}`}
+                flexWrap="wrap"
+                {...{
+                  ...(index === 0 ? { borderBottomRadius: 0 } : {}),
+                  ...(index + 1 === length ? { borderTopRadius: 0 } : {}),
+                }}
+              >
                 {tabs.map(key => (
                   <Tabs.Trigger
                     minW="unset"
@@ -42,7 +49,7 @@ const ColorTabs: React.FC<Props> = ({ colors }) => {
 
           {Object.entries(colors).map(([key, colors]) => (
             <Tabs.Content key={`content-${key}`} value={key}>
-              <Stack p={2} gap={2} borderRadius={6}>
+              <Stack gap={2} borderRadius={6}>
                 {colors?.map((color, i) => (
                   <Button
                     {...{ to: `/${color.replace("#", "")}` }}
