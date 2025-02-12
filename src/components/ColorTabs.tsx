@@ -11,7 +11,7 @@ interface Props {
 
 const ColorTabs: React.FC<Props> = ({ colors }) => {
   const tabList = useMemo(
-    () => [Object.keys(colors).slice(0, 3), Object.keys(colors).slice(3, 6)],
+    () => [Object.keys(colors).slice(0, 2), Object.keys(colors).slice(2, 4), Object.keys(colors).slice(4, 6)],
     [colors]
   );
 
