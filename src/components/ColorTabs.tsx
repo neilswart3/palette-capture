@@ -10,10 +10,15 @@ interface Props {
 }
 
 const ColorTabs: React.FC<Props> = ({ colors }) => {
-  const tabList = useMemo(
-    () => [Object.keys(colors).slice(0, 2), Object.keys(colors).slice(2, 4), Object.keys(colors).slice(4, 6)],
-    [colors]
-  );
+  const tabList = useMemo(() => {
+    const chunk = 2;
+    const length = Object.keys(colors).length;
+
+    return Array.from({ length: length / chunk }, (_, index) => {
+      const start = index * chunk;
+      return Object.keys(colors).slice(start, start + chunk);
+    });
+  }, [colors]);
 
   return (
     <>
@@ -31,6 +36,9 @@ const ColorTabs: React.FC<Props> = ({ colors }) => {
                 {...{
                   ...(index === 0 ? { borderBottomRadius: 0 } : {}),
                   ...(index + 1 === length ? { borderTopRadius: 0 } : {}),
+                  ...(index !== 0 && index + 1 !== length
+                    ? { borderTopRadius: 0, borderBottomRadius: 0 }
+                    : {}),
                 }}
               >
                 {tabs.map(key => (

@@ -1,6 +1,4 @@
-import { ColorTabs } from "@/components";
-import { Stack, Text } from "@chakra-ui/react";
-import Case from "case";
+import { ColorPicker, ColorTabs } from "@/components";
 import { useMemo } from "react";
 import { useParams } from "react-router";
 import tinycolor from "tinycolor2";
@@ -33,32 +31,7 @@ const SingleColor: React.FC = () => {
 
   return (
     <>
-      <Stack
-        alignItems="center"
-        justifyContent="center"
-        borderRadius={6}
-        background={color}
-        padding={8}
-      >
-        {tinycolor(color).toName() && (
-          <Text
-            textStyle="xl"
-            fontWeight="bold"
-            color={tinycolor
-              .mostReadable(color, ["#fff", "#000"])
-              .toHexString()}
-          >
-            {Case.title(tinycolor(color).toName() as string)}
-          </Text>
-        )}
-        <Text
-          textStyle="xl"
-          fontWeight="bold"
-          color={tinycolor.mostReadable(color, ["#fff", "#000"]).toHexString()}
-        >
-          {color}
-        </Text>
-      </Stack>
+      <ColorPicker value={color} />
       <ColorTabs colors={colorCombinations} />
     </>
   );
