@@ -1,50 +1,21 @@
-# React + TypeScript + Vite
+## Palette Capture
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small pwa that can determine the palette of an image captured with the phone camera.
 
-Currently, two official plugins are available:
+## Features (demo from Android studio)
+- Install as a PWA
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![image](https://github.com/user-attachments/assets/509853c8-7c1b-4470-a931-236951265045)
+![image](https://github.com/user-attachments/assets/1a804475-7160-4ebd-ae98-07e2e580fc2a)
 
-## Expanding the ESLint configuration
+- Open the camera and capture an image
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+![image](https://github.com/user-attachments/assets/cd165706-3822-491b-8e0c-006af8b60387)
 
-- Configure the top-level `parserOptions` property like this:
+- Generate palette from image
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+![image](https://github.com/user-attachments/assets/e46055b1-6437-4dec-a6e6-8c30083da32c)
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- Navigate throug colours generated
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+![image](https://github.com/user-attachments/assets/1a23c90e-f5d5-45e6-9a05-cbb16a4dd162)
