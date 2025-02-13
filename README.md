@@ -11,4 +11,5 @@ A small pwa that can determine the palette of an image captured with the phone c
 
 ![image](https://github.com/user-attachments/assets/509853c8-7c1b-4470-a931-236951265045)
 ![image](https://github.com/user-attachments/assets/e46055b1-6437-4dec-a6e6-8c30083da32c)
-![image](https://github.com/user-attachments/assets/1a23c90e-f5d5-45e6-9a05-cbb16a4dd162)
+![image](https://github.com/user-attachments/assets/e441cf35-57bd-4461-bc92-7210245606e3)
+![image](https://github.com/user-attachments/assets/376243ef-c747-47e0-8694-eebab73a56ba)
