@@ -30,9 +30,18 @@ const ColorPicker: React.FC<Props> = ({ value }) => {
   const [colorValue, setColorValue] = useState<string>(value);
   const navigate = useNavigate();
 
+  const bgColor = useMemo(
+    () => tinycolor.mostReadable(colorValue, ["#fff", "#000"]).toHexString(),
+    [colorValue]
+  );
   const textColor = useMemo(
     () => tinycolor.mostReadable(colorValue, ["#fff", "#000"]).toHexString(),
     [colorValue]
+  );
+
+  const textOnBgColor = useMemo(
+    () => tinycolor.mostReadable(bgColor, ["#fff", "#000"]).toHexString(),
+    [bgColor]
   );
 
   const handleEdit = () => {
@@ -77,6 +86,8 @@ const ColorPicker: React.FC<Props> = ({ value }) => {
           right="1rem"
           bottom="1rem"
           onClick={handleEdit}
+          bgColor={bgColor}
+          color={textOnBgColor}
         >
           <MdEdit />
         </IconButton>
