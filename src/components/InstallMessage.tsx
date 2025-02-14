@@ -1,14 +1,14 @@
 import { Box, Button, Icon, Stack } from "@chakra-ui/react";
-import React, {  useState } from "react";
+import React from "react";
 import { MdClose, MdDownload } from "react-icons/md";
 
 interface Props {
+  show: boolean;
+  setShow: (show: boolean) => void;
   onInstall: () => void;
 }
 
-const InstallMessage: React.FC<Props> = ({ onInstall }) => {
-  const [show, setShow] = useState<boolean>(true);
-
+const InstallMessage: React.FC<Props> = ({ show, setShow, onInstall }) => {
   return (
     <>
       {show && (

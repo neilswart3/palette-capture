@@ -108,11 +108,37 @@ function Home() {
     if (window.matchMedia("(display-mode: standalone)").matches) {
       setShowInstall(false);
     }
-  }, [showInstall]);
+
+    if ("getInstalledRelatedApps" in window.navigator) {
+      const handleRelatedApps = async () => {
+        try {
+          const relatedApps = await (
+            navigator as Navigator & {
+              getInstalledRelatedApps: () => Promise<
+                Record<"platform" | "url", string>[]
+              >;
+            }
+          ).getInstalledRelatedApps();
+
+          if (relatedApps.find(({ url }) => url.includes("palette-capture"))) {
+            setShowInstall(false);
+          }
+        } catch (error) {
+          console.log("error:", error);
+        }
+      };
+
+      handleRelatedApps();
+    }
+  }, []);
 
   return (
     <>
-      <InstallMessage onInstall={handleInstallApp} />
+      <InstallMessage
+        show={showInstall}
+        setShow={setShowInstall}
+        onInstall={handleInstallApp}
+      />
 
       <Input
         display="none"

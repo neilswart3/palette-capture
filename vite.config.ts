@@ -22,6 +22,12 @@ export default defineConfig({
         short_name: "palette-capture",
         description: "An app to generate a palette of colors from a photo",
         theme_color: "#171717",
+        related_applications: [
+          {
+            platform: "webapp",
+            url: "https://palette-capture.vercel.app/manifest.json",
+          },
+        ],
         icons: [
           {
             src: "/android-chrome-192x192.png",
